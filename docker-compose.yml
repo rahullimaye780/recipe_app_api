@@ -11,6 +11,26 @@ services:
     volumes:
        - ./app:/app           # mount the app directory to /app in the container
     command:
-      sh -c "python manage.py runserver 0.0.0.0:8000"             # command to run the Django development server
+      sh -c "python manage.py runserver 0.0.0.0:8000"   #command to run the Django development server
+    environment:
+      - DB_HOST=db
+      - DB_NAME=devdb
+      - DB_USER=devuser
+      - DB_PASS=changeme
+    depends_on:
+      - db
+
+  db:
+    image: postgres:14-alpine
+    volumes:
+      - dev-db-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=devdb
+      - POSTGRES_USER=devuser
+      - POSTGRES_PASSWORD=changeme
+
+volumes:
+  dev-db-data:
+
 
 
