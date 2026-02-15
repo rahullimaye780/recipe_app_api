@@ -1,5 +1,5 @@
 FROM python:3.9-alpine3.13
-LABEL maintainer="Rahul Limaye"
+LABEL maintainer="Rahul Li"
 
 ENV PYTHONUNBUFFERED 1
 
@@ -12,8 +12,6 @@ EXPOSE 8000
 ARG DEV=false
 # below Run command runs multiple commands in one layer,to run multiple commands '&& \' is used to chain them together.
 #It creates a virtual environment, upgrades pip, installs the required packages, removes the temporary files and adds a new user 'django-user' with no password and no home directory.
-
-
 
 RUN python -m venv /py && \
     /py/bin/pip install --upgrade pip && \
@@ -29,6 +27,7 @@ RUN python -m venv /py && \
     adduser \
         --disabled-password \
         --no-create-home \
+        django-user
 
 ENV PATH="/py/bin:$PATH"
 
